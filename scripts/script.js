@@ -252,7 +252,7 @@ function atualizarCarrinhoModal() {
         container.appendChild(itemEl);
     });
     
-    const taxa = subtotal * 0; // 10% de taxa de serviço
+    const taxa = subtotal * 0.1; // 10% de taxa de serviço (CORRIGIDO)
     const total = subtotal + taxa;
     
     document.getElementById('subtotal').textContent = `R$ ${subtotal.toFixed(2)}`;
@@ -267,11 +267,10 @@ function irParaPagamento() {
     }
     
     const subtotal = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-    const taxa = subtotal * 0;
+    const taxa = subtotal * 0.1; // CORRIGIDO
     const total = subtotal + taxa;
     
     document.getElementById('pag-subtotal').textContent = `R$ ${subtotal.toFixed(2)}`;
-    document.getElementById('pag-taxa').textContent = `R$ ${taxa.toFixed(2)}`;
     document.getElementById('pag-total').textContent = `R$ ${total.toFixed(2)}`;
     
     fecharCarrinho();
@@ -286,33 +285,38 @@ function fecharPagamento() {
 // FORMULÁRIO PAGAMENTO
 // ==============================
 
-document.getElementById('form-pagamento').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const dados = {
-        pagamento: document.querySelector('input[name="pagamento"]:checked').value,
-        nome: document.getElementById('nome').value,
-        telefone: document.getElementById('telefone').value,
-        observacoes: document.getElementById('observacoes').value,
-        itens: carrinho,
-        subtotal: carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0),
-        taxa: carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0) * 0.1
-    };
-    
-    dados.total = dados.subtotal + dados.taxa;
-    
-    // Simular envio
-    console.log('Pedido:', dados);
-    
-    mostrarNotificacao('✓ Pedido confirmado! Obrigado pela compra!');
-    
-    // Limpar carrinho e fechar modal
-    carrinho = [];
-    salvarCarrinho();
-    fecharPagamento();
-    document.getElementById('form-pagamento').reset();
-    renderizarDrinks(filtroAtual);
-});
+function inicializarFormularioPagamento() {
+    const formPagamento = document.getElementById('form-pagamento');
+    if (formPagamento) {
+        formPagamento.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const dados = {
+                pagamento: document.querySelector('input[name="pagamento"]:checked').value,
+                nome: document.getElementById('nome').value,
+                telefone: document.getElementById('telefone').value,
+                observacoes: document.getElementById('observacoes').value,
+                itens: carrinho,
+                subtotal: carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0),
+                taxa: carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0) * 0.1
+            };
+            
+            dados.total = dados.subtotal + dados.taxa;
+            
+            // Simular envio
+            console.log('Pedido:', dados);
+            
+            mostrarNotificacao('✓ Pedido confirmado! Obrigado pela compra!');
+            
+            // Limpar carrinho e fechar modal
+            carrinho = [];
+            salvarCarrinho();
+            fecharPagamento();
+            formPagamento.reset();
+            renderizarDrinks(filtroAtual);
+        });
+    }
+}
 
 // ==============================
 // MODAL GERAL
@@ -377,5 +381,6 @@ document.head.appendChild(style);
 document.addEventListener('DOMContentLoaded', function() {
     carregarCarrinho();
     renderizarDrinks('todos');
+    inicializarFormularioPagamento(); // Inicializa o formulário de pagamento
     console.log('Site carregado com sucesso!');
 });
