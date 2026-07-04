@@ -83,6 +83,7 @@ const drinks = [
 
 let carrinho = [];
 let filtroAtual = 'todos';
+let tipoEntregaSelecionado = 'retirada'; // Padrão é retirada
 
 // Carregar carrinho do localStorage
 function carregarCarrinho() {
@@ -224,6 +225,7 @@ function atualizarCarrinhoModal() {
         document.getElementById('subtotal').textContent = 'R$ 0,00';
         document.getElementById('taxa').textContent = 'R$ 0,00';
         document.getElementById('total').textContent = 'R$ 0,00';
+        document.getElementById('resumo-taxa').style.display = 'none';
         return;
     }
     
@@ -252,12 +254,11 @@ function atualizarCarrinhoModal() {
         container.appendChild(itemEl);
     });
     
-    const taxa = subtotal * 0.1; // 10% de taxa de serviço (CORRIGIDO)
-    const total = subtotal + taxa;
-    
+    // Taxa só aparece se houver itens no carrinho
+    document.getElementById('resumo-taxa').style.display = 'none';
+    document.getElementById('taxa').textContent = 'R$ 0,00';
+    document.getElementById('total').textContent = `R$ ${subtotal.toFixed(2)}`;
     document.getElementById('subtotal').textContent = `R$ ${subtotal.toFixed(2)}`;
-    document.getElementById('taxa').textContent = `R$ ${taxa.toFixed(2)}`;
-    document.getElementById('total').textContent = `R$ ${total.toFixed(2)}`;
 }
 
 function irParaPagamento() {
@@ -267,11 +268,14 @@ function irParaPagamento() {
     }
     
     const subtotal = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-    const taxa = subtotal * 0.1; // CORRIGIDO
-    const total = subtotal + taxa;
     
     document.getElementById('pag-subtotal').textContent = `R$ ${subtotal.toFixed(2)}`;
-    document.getElementById('pag-total').textContent = `R$ ${total.toFixed(2)}`;
+    document.getElementById('pag-taxa-div').style.display = 'none';
+    document.getElementById('pag-total').textContent = `R$ ${subtotal.toFixed(2)}`;
+    
+    // Resetar para retirada como padrão
+    document.querySelector('input[name="entrega"][value="retirada"]').checked = true;
+    tipoEntregaSelecionado = 'retirada';
     
     fecharCarrinho();
     document.getElementById('modal-pagamento').style.display = 'block';
@@ -279,6 +283,29 @@ function irParaPagamento() {
 
 function fecharPagamento() {
     document.getElementById('modal-pagamento').style.display = 'none';
+}
+
+// ==============================
+// ATUALIZAR TAXA BASEADO EM ENTREGA
+// ==============================
+
+function atualizarTaxa() {
+    const tipoEntrega = document.querySelector('input[name="entrega"]:checked').value;
+    tipoEntregaSelecionado = tipoEntrega;
+    
+    const subtotal = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
+    let taxa = 0;
+    
+    if (tipoEntrega === 'delivery') {
+        taxa = subtotal * 0.1; // 10% de taxa
+        document.getElementById('pag-taxa-div').style.display = 'block';
+        document.getElementById('pag-taxa').textContent = `R$ ${taxa.toFixed(2)}`;
+    } else {
+        document.getElementById('pag-taxa-div').style.display = 'none';
+    }
+    
+    const total = subtotal + taxa;
+    document.getElementById('pag-total').textContent = `R$ ${total.toFixed(2)}`;
 }
 
 // ==============================
@@ -291,17 +318,21 @@ function inicializarFormularioPagamento() {
         formPagamento.addEventListener('submit', function(e) {
             e.preventDefault();
             
+            const tipoEntrega = document.querySelector('input[name="entrega"]:checked').value;
+            const subtotal = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
+            const taxa = tipoEntrega === 'delivery' ? subtotal * 0.1 : 0;
+            
             const dados = {
+                tipoEntrega: tipoEntrega,
                 pagamento: document.querySelector('input[name="pagamento"]:checked').value,
                 nome: document.getElementById('nome').value,
                 telefone: document.getElementById('telefone').value,
                 observacoes: document.getElementById('observacoes').value,
                 itens: carrinho,
-                subtotal: carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0),
-                taxa: carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0) * 0.1
+                subtotal: subtotal,
+                taxa: taxa,
+                total: subtotal + taxa
             };
-            
-            dados.total = dados.subtotal + dados.taxa;
             
             // Simular envio
             console.log('Pedido:', dados);
