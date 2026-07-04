@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barraca São João - Drinks Festa Junina</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>🔥 Barraca São João 🔥</h1>
+                <p>Drinks Festa Junina</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn-carrinho" onclick="abrirCarrinho()">
+                    🛒 Carrinho (<span id="qtd-carrinho">0</span>)
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Venha Provar Nossos Drinks! 🍹</h2>
+            <p>As melhores bebidas para sua festa junina</p>
+        </div>
+    </section>
+
+    <!-- MENU DE DRINKS -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <h2>Nossos Drinks</h2>
+            
+            <!-- FILTROS -->
+            <div class="filtros">
+                <button class="filtro-btn ativo" onclick="filtrarDrinks('todos')">Todos</button>
+                <button class="filtro-btn" onclick="filtrarDrinks('alcoolico')">🍺 Alcoólicos</button>
+                <button class="filtro-btn" onclick="filtrarDrinks('naoalcoolico')">🥤 Sem Álcool</button>
+            </div>
+
+            <!-- GRID DE DRINKS -->
+            <div class="drinks-grid" id="drinks-grid">
+                <!-- Drinks serão inseridos via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL CARRINHO -->
+    <div class="modal" id="modal-carrinho">
+        <div class="modal-content">
+            <span class="fechar" onclick="fecharCarrinho()">&times;</span>
+            <h2>🛒 Seu Carrinho</h2>
+            
+            <div class="carrinho-items" id="carrinho-items">
+                <p class="vazio">Seu carrinho está vazio</p>
+            </div>
+            
+            <div class="carrinho-resumo">
+                <div class="resumo-item">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">R$ 0,00</span>
+                </div>
+                <div class="resumo-item">
+                    <span>Taxa de Serviço (10%):</span>
+                    <span id="taxa">R$ 0,00</span>
+                </div>
+                <div class="resumo-total">
+                    <span>Total:</span>
+                    <span id="total">R$ 0,00</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="irParaPagamento()" style="width: 100%; margin-top: 20px;">
+                Ir para Pagamento
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL PAGAMENTO -->
+    <div class="modal" id="modal-pagamento">
+        <div class="modal-content">
+            <span class="fechar" onclick="fecharPagamento()">&times;</span>
+            <h2>💳 Forma de Pagamento</h2>
+            
+            <form id="form-pagamento">
+                <div class="form-group">
+                    <label>Escolha a forma de pagamento:</label>
+                    <div class="opcoes-pagamento">
+                        <label class="opcao">
+                            <input type="radio" name="pagamento" value="pix" checked>
+                            <span>💜 Pix</span>
+                        </label>
+                        <label class="opcao">
+                            <input type="radio" name="pagamento" value="dinheiro">
+                            <span>💵 Dinheiro</span>
+                        </label>
+                        <label class="opcao">
+                            <input type="radio" name="pagamento" value="cartao">
+                            <span>💳 Cartão</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="tel" id="telefone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoes">Observações (Opcional)</label>
+                    <textarea id="observacoes" rows="3" placeholder="Ex: Sem gelo, com pouco açúcar..."></textarea>
+                </div>
+
+                <div class="resumo-pagamento">
+                    <div>Subtotal: <span id="pag-subtotal">R$ 0,00</span></div>
+                    <div>Taxa: <span id="pag-taxa">R$ 0,00</span></div>
+                    <div class="total">Total: <span id="pag-total">R$ 0,00</span></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">
+                    Confirmar Pedido
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- INFORMAÇÕES -->
+    <section class="info">
+        <div class="container">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🕐 Horário</h3>
+                    <p>Sexta a Domingo<br>18h às 23h</p>
+                </div>
+                <div class="info-card">
+                    <h3>📍 Localização</h3>
+                    <p>Rua das Festas, 123<br>São João do Pé</p>
+                </div>
+                <div class="info-card">
+                    <h3>📞 Contato</h3>
+                    <p>(11) 99999-9999<br>contato@barraca.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2024 Barraca São João. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+</body>
+</html>
