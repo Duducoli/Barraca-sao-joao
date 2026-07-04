@@ -14,6 +14,7 @@ Este é um **MVP (Minimum Viable Product)** completo com:
 - **Design responsivo** - Mobile, Tablet e Desktop
 - **Animações suaves** - Para melhor UX
 - **Paleta de cores** - Branco gelo, Vermelho e Amarelo
+- **Pronto para imagens** - Estrutura para adicionar fotos dos drinks
 
 ## 🚀 Recursos
 
@@ -23,6 +24,7 @@ Este é um **MVP (Minimum Viable Product)** completo com:
 ✅ Múltiplas formas de pagamento  
 ✅ Design temático de festa junina  
 ✅ Paleta vermelha, branco gelo e amarelo  
+✅ Estrutura preparada para imagens  
 ✅ Sem dependências externas  
 ✅ Performance otimizada  
 ✅ Código limpo e comentado  
@@ -36,6 +38,8 @@ barraca-sao-joao/
 │   └── style.css       # Estilos CSS
 ├── scripts/
 │   └── script.js       # Lógica JavaScript
+├── assets/
+│   └── imagens/        # Pasta para as imagens dos drinks
 └── README.md           # Este arquivo
 ```
 
@@ -81,6 +85,26 @@ O site é totalmente responsivo com breakpoints em:
 8. **Água de Coco** - Água de coco natural (R$ 11,00)
 9. **Licor de Jabuticaba** - Licor premium (R$ 18,00)
 
+## 📋 Como Adicionar Imagens
+
+### Passo 1: Criar pasta de imagens
+Crie uma pasta chamada `assets/imagens/` no repositório
+
+### Passo 2: Adicionar as imagens
+Coloque as imagens dos drinks com os nomes:
+- `quentao.jpg`
+- `broto.jpg`
+- `agua-acucar.jpg`
+- `caldo-cana.jpg`
+- `vinho-quente.jpg`
+- `suco-junino.jpg`
+- `vinhete.jpg`
+- `agua-coco.jpg`
+- `licor-jabuticaba.jpg`
+
+### Passo 3: Pronto!
+As imagens serão exibidas automaticamente nos drinks!
+
 ## ✏️ Personalizações Recomendadas
 
 ### Informações de Contato
@@ -98,7 +122,7 @@ const drinks = [
         nome: "Seu Drink",
         descricao: "Descrição",
         preco: 15.00,
-        icone: "🍹",
+        imagem: "assets/imagens/seu-drink.jpg",
         categoria: "alcoolico" // ou "naoalcoolico"
     },
     // ...

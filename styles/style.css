@@ -170,13 +170,18 @@ body {
 .drink-imagem {
     width: 100%;
     height: 200px;
-    object-fit: cover;
-    background: linear-gradient(135deg, var(--secondary-color), var(--ice-white));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 80px;
     border-bottom: 3px solid var(--accent-color);
+    background: linear-gradient(135deg, var(--secondary-color), var(--ice-white));
+    overflow: hidden;
+}
+
+.drink-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .drink-info {

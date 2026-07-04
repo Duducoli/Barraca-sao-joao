@@ -8,7 +8,7 @@ const drinks = [
         nome: "Quentão",
         descricao: "Bebida quente com vinho tinto, gengibre e especiarias",
         preco: 15.00,
-        icone: "🔥",
+        imagem: "assets/imagens/quentao.jpg", // Adicione a imagem aqui
         categoria: "alcoolico"
     },
     {
@@ -16,7 +16,7 @@ const drinks = [
         nome: "Broto",
         descricao: "Cachaça com mel, limão e gengibre",
         preco: 12.00,
-        icone: "🍯",
+        imagem: "assets/imagens/broto.jpg", // Adicione a imagem aqui
         categoria: "alcoolico"
     },
     {
@@ -24,7 +24,7 @@ const drinks = [
         nome: "Água com Açúcar",
         descricao: "Bebida refrescante com açúcar cristal e limão",
         preco: 8.00,
-        icone: "🥤",
+        imagem: "assets/imagens/agua-acucar.jpg", // Adicione a imagem aqui
         categoria: "naoalcoolico"
     },
     {
@@ -32,7 +32,7 @@ const drinks = [
         nome: "Caldo de Cana",
         descricao: "Suco natural de cana de açúcar gelado",
         preco: 10.00,
-        icone: "🌾",
+        imagem: "assets/imagens/caldo-cana.jpg", // Adicione a imagem aqui
         categoria: "naoalcoolico"
     },
     {
@@ -40,7 +40,7 @@ const drinks = [
         nome: "Vinho Quente",
         descricao: "Vinho aquecido com canela e cravo",
         preco: 16.00,
-        icone: "🍷",
+        imagem: "assets/imagens/vinho-quente.jpg", // Adicione a imagem aqui
         categoria: "alcoolico"
     },
     {
@@ -48,7 +48,7 @@ const drinks = [
         nome: "Suco Junino",
         descricao: "Mix de frutas tropicais com hortelã",
         preco: 9.00,
-        icone: "🍊",
+        imagem: "assets/imagens/suco-junino.jpg", // Adicione a imagem aqui
         categoria: "naoalcoolico"
     },
     {
@@ -56,7 +56,7 @@ const drinks = [
         nome: "Vinhete",
         descricao: "Vinho com refrigerante e gelo",
         preco: 13.00,
-        icone: "🍹",
+        imagem: "assets/imagens/vinhete.jpg", // Adicione a imagem aqui
         categoria: "alcoolico"
     },
     {
@@ -64,7 +64,7 @@ const drinks = [
         nome: "Água de Coco",
         descricao: "Água de coco natural com gelado",
         preco: 11.00,
-        icone: "🥥",
+        imagem: "assets/imagens/agua-coco.jpg", // Adicione a imagem aqui
         categoria: "naoalcoolico"
     },
     {
@@ -72,7 +72,7 @@ const drinks = [
         nome: "Licor de Jabuticaba",
         descricao: "Licor caseiro de jabuticaba premium",
         preco: 18.00,
-        icone: "🫐",
+        imagem: "assets/imagens/licor-jabuticaba.jpg", // Adicione a imagem aqui
         categoria: "alcoolico"
     }
 ];
@@ -164,7 +164,9 @@ function renderizarDrinks(filtro = 'todos') {
         const card = document.createElement('div');
         card.className = 'drink-card';
         card.innerHTML = `
-            <div class="drink-imagem">${drink.icone}</div>
+            <div class="drink-imagem">
+                <img src="${drink.imagem}" alt="${drink.nome}" onerror="this.style.display='none'">
+            </div>
             <div class="drink-info">
                 <h3>${drink.nome}</h3>
                 <p class="drink-descricao">${drink.descricao}</p>
@@ -237,7 +239,7 @@ function atualizarCarrinhoModal() {
         itemEl.innerHTML = `
             <div class="item-info">
                 <h4>${item.nome}</h4>
-                <p>${item.icone}</p>
+                <p>${item.categoria === 'alcoolico' ? '🍺' : '🥤'}</p>
             </div>
             <div class="item-controles">
                 <button class="qtd-btn" onclick="atualizarQuantidadeCarrinho(${item.id}, ${item.quantidade - 1})">−</button>
