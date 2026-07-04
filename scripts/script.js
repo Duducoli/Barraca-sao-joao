@@ -252,7 +252,7 @@ function atualizarCarrinhoModal() {
         container.appendChild(itemEl);
     });
     
-    const taxa = subtotal * 0.1; // 10% de taxa de serviço
+    const taxa = subtotal * 0; // 10% de taxa de serviço
     const total = subtotal + taxa;
     
     document.getElementById('subtotal').textContent = `R$ ${subtotal.toFixed(2)}`;
@@ -267,7 +267,7 @@ function irParaPagamento() {
     }
     
     const subtotal = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-    const taxa = subtotal * 0.1;
+    const taxa = subtotal * 0;
     const total = subtotal + taxa;
     
     document.getElementById('pag-subtotal').textContent = `R$ ${subtotal.toFixed(2)}`;
