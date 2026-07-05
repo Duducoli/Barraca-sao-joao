@@ -84,6 +84,7 @@ const drinks = [
 let carrinho = [];
 let filtroAtual = 'todos';
 let tipoEntregaSelecionado = 'retirada'; // Padrão é retirada
+const TAXA_DELIVERY_FIXA = 4.00; // Taxa fixa de R$ 4,00
 
 // Carregar carrinho do localStorage
 function carregarCarrinho() {
@@ -297,7 +298,7 @@ function atualizarTaxa() {
     let taxa = 0;
     
     if (tipoEntrega === 'delivery') {
-        taxa = subtotal * 0.1; // 10% de taxa
+        taxa = TAXA_DELIVERY_FIXA; // Taxa fixa de R$ 4,00
         document.getElementById('pag-taxa-div').style.display = 'block';
         document.getElementById('pag-taxa').textContent = `R$ ${taxa.toFixed(2)}`;
     } else {
@@ -320,7 +321,7 @@ function inicializarFormularioPagamento() {
             
             const tipoEntrega = document.querySelector('input[name="entrega"]:checked').value;
             const subtotal = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-            const taxa = tipoEntrega === 'delivery' ? subtotal * 0.1 : 0;
+            const taxa = tipoEntrega === 'delivery' ? TAXA_DELIVERY_FIXA : 0;
             
             const dados = {
                 tipoEntrega: tipoEntrega,
